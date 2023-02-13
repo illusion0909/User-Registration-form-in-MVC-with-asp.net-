@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DotNet_Project9.Models.Register>
+<h2 class="text-primary text-center">User List</h2>
+@Html.ActionLink("Add New User", "Create", "Register", new { @class = "btn btn-info" })
+<br/>
+<br/>
+@if (!Model.Any())
+{
+    <h2 class="text-danger">No Record Found</h2>
+}
+else
+{
+    <table class="table table-bordered table-hover table-striped tatable-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Subscribe</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                using (Html.BeginForm("Delete", "Register", new { id = item.Id }))
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Address</td>
+                        <td>@item.Email</td>
+                        <td>@item.Gender</td>
+
+                        @*@item.Subscribe*@
+                        @* <td>  @Html.CheckBox("aa",item.Subscribe, new {@disabled= "disabled" }) </td> *@
+                    <td>
+                        @if (item.Subscribe)
+                        {
+                            <input type="checkbox" disabled checked />
+
+                        }
+                        else
+                        {
+                            <input type="checkbox" disabled />
+                        }
+                    </td>
+                            <td>@item.City.Name</td>
+                            <td>@item.City.State.Name</td>
+                            <td>@item.City.State.Country.Name</td>
+
+
+                            <td>
+
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary " })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                                <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('want to delete data?')" />
+                            </td>
+
+                        </tr>
+            }
+        }
+        </tbody>
+    </table>
+}
